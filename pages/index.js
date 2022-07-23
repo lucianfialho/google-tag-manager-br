@@ -1,8 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Parser from 'rss-parser';
 
-export default function Home() {
+export default function Home({feed}) {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,57 +14,49 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to GTMBR!
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          A Google Tag Manager Brasil é um HUB de produção e curadoria de conteúdo voltada para a comunidade de Google Tag Manager.
         </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className={styles.content}>
+          {feed.items.map((post, i) => {
+            return (
+              <div key={i} className={styles.grid}>
+                <a href={ post.url } className={styles.card}>
+                  <h2>{post.title}</h2>
+                </a>
+              </div>
+            )
+          })}
         </div>
       </main>
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://metricasboss.com.br?utm_source=gtmbr&utm_medium=site"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by {'Métricas Boss'}
           <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            <svg version="1.1" id="Camada_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 184.5 170.7" className="logo__Svg-sc-1j470k2-0 DbrsA"><circle cx="78.7" cy="82.6" r="6.9"></circle><circle cx="105" cy="95.6" r="6.9"></circle><path d="M43.8 107l36.5-22.8 21.5 16.8 5.3-.8 32-24.5-3.5-6-31.5 24.8-24.5-18-39 24.7z"></path><circle cx="78.7" cy="111.9" r="6.9"></circle><circle cx="105" cy="124.9" r="6.9"></circle><path d="M43.8 136.3l36.5-22.7 21.5 16.7 5.3-.7 32-24.5-3.5-6-31.5 24.7-24.5-18-39 24.8z"></path><path d="M18.6 51.2H163v99.9H18.6V51.2zM29.5 140H152V62.3H29.5V140zm99.9-98.6h-9.8c0-3.1-.1-6 0-9 .1-2.9-1-4.2-4.1-4.2-15.7.1-31.3.1-47 0-3.3 0-4.5 1.4-4.3 4.5.1 2.8 0 5.6 0 8.6h-9.7c0-4.3-.4-8.4.1-12.5.8-6.3 5.7-10.4 12.1-10.4 16.8-.1 33.6-.2 50.5 0 7 .1 11.8 5.1 12.1 12 .2 3.5.1 7 .1 11z"></path></svg>
           </span>
         </a>
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps(context) {
+  const parser = new Parser();
+  const url = 'https://metricasboss.com.br/api/gtmRss';
+  const feed = await parser.parseURL(url)
+
+  return {
+    props: {
+      feed
+    }
+  }
 }

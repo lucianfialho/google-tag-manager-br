@@ -12,6 +12,13 @@
   align-items: center;
 }
 
+.content {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .footer {
   display: flex;
   flex: 1;
@@ -54,6 +61,7 @@
   margin: 4rem 0;
   line-height: 1.5;
   font-size: 1.5rem;
+  max-width: 600px;
 }
 
 .code {
@@ -71,6 +79,7 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+  
 }
 
 .card {
@@ -94,7 +103,6 @@
 
 .card h2 {
   margin: 0 0 1rem 0;
-  font-size: 1.5rem;
 }
 
 .card p {
@@ -104,8 +112,15 @@
 }
 
 .logo {
-  height: 1em;
-  margin-left: 0.5rem;
+  height: 2.5em;
+  
+}
+
+.logo svg {
+  fill: rgb(255, 255, 255);
+  height: 35px;
+  cursor: pointer;
+  margin-left: 0.4em;
 }
 
 @media (max-width: 600px) {
